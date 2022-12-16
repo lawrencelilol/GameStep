@@ -1,21 +1,20 @@
-# GameStep
-
 GameStep
 =======
 
-
-GameStep is a small JavaScript file that fetches Markdown files and renders them
-as full pages. Essentially, it's the easiest
-way to make open source documentation from *Readme* files.
+## Overview
+GameStep is a SDK that converts daily footsteps into in-game coins 
 
 GameStep SDK functions as following:
-1. Retreiving steps data from Apple HealthKit.
-2. Converting steps to coins (100 steps = 1 coin).
-3. Store the coins and steps data permanantly to the phone through Apple Developer Tool ```UserDefault``` class.
-4. Open up a Coins interface for developer to manipulate the SDK.
+- Retreiving steps data from Apple HealthKit.
+- Converting steps to coins (100 steps = 1 coin).
+- Store the coins and steps data permanantly to the phone through Apple Developer Tool ```UserDefault``` class.
+- Open up a Coins interface for developer to manipulate the SDK.
+
 ### Retreiving steps data from Apple HealthKit.
 
-The original code for accessing the healthkit data is from azarmshap on youtube, https://www.youtube.com/watch?v=ohgrzM9gfvM And it was revised to match the data mapping.
+The original code for accessing the healthkit data is from [azarmshap] on youtube, And it was revised to match the data mapping.
+
+[azarmshap]: https://www.youtube.com/watch?v=ohgrzM9gfvM
 
 The folder ```HealthInfo``` is where the SDK get access the data. The developer need to manually add the Healthkit capability from XCode and sign fo the privacy info list for accessing user's health data.
 
@@ -23,21 +22,7 @@ The file HealthStore contains the major methods like: asking for authorization f
 
 The step is used to represent a customized data period of steps. It has attributes like ```step``` ```count```, ```UUID``` and ```date```.
 
-### Converting steps to coins (100 steps = 1 coin).
-
-The ```GameStep``` file act as a main controller of the SDK, which it receive the steps data from the healthkit access, handle calls from the developer, and do the converting and storing procedure. 
-
-The ```GameStep``` main class have variables like:
-- ```healthstore``` is used to retreive steps from healthkit.
-- ```currentStep```, is used to record the newest step retreived from the healthkit.
-- ```theCoin``` is used to record the newest coin converted.
-
-
-### Store the data
-```defaults``` stores the the last state of steps and coins from last update of before the user quit the app from last time.
-***
-
-## How to use GameStep SDK
+## Installation and Usage
 1. Import the package.
 2. Initialize the instance of GameStep.
 3. Use the interface for the coins and steps to manipulate.
@@ -56,6 +41,27 @@ In future versions, if applicable, we hope the SDK will explore more powerful fe
  * Can fetch GitHub Readme files
  * Gorgeous default theme (and it's responsive)
  * Just create an HTML file and deploy!
+
+### Converting steps to coins (100 steps = 1 coin).
+
+The ```GameStep``` file act as a main controller of the SDK, which it receive the steps data from the healthkit access, handle calls from the developer, and do the converting and storing procedure. 
+
+The ```GameStep``` main class have variables like:
+- ```healthstore``` is used to retreive steps from healthkit.
+- ```currentStep```, is used to record the newest step retreived from the healthkit.
+- ```theCoin``` is used to record the newest coin converted.
+
+
+## Endpoints
+### getCoins()
+```func getCoins() -> Int``` is a getter function of the coins that user has earned so far. It fetches from the ```UserDefault``` class.
+
+``` swift
+var globalUser = GameStep()
+let totalCoins = SKLabelNode(text: "Total Coins Earned: \(globalUser.getCoins())")
+totalCoins.fontName = "AvenirNext-Bold"
+totalCoins.position = CGPoint(x: size.width/2, y: size.height/2 + 300)
+```
 
 *Current version: [v0.9.0][dist]*
 
