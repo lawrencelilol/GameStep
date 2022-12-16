@@ -21,6 +21,15 @@ The folder ```HealthInfo``` is where the SDK get access the data. The developer 
 The file HealthStore contains the major methods like: asking for authorization from the user to get access to healthkit, fetching the steps data in a given date range, and get the today's step count so far whenever the user launches the app. In the current file, the query in the function ```fetchStep``` will fetch the data of today in a 1 hr frequency, which can be further extend to 1 week, 1 month and further, and the frequency can be narrowed to 1 min or 1 sec if necessary. In future versions, we will open up an interface for developer to customize the time and frequency manner when accessing the steps data. It will return the a Healthkit collection which will be further be transformed into a collection of array of Step object, which initialize with ```date```, ```count``` and ```UUID```. The function ```getStep``` will directly return a double that contains today's step so far whenever this function gets called.
 
 The step is used to represent a customized data period of steps. It has attributes like ```step``` ```count```, ```UUID``` and ```date```.
+### Converting steps to coins (100 steps = 1 coin).
+
+The ```GameStep``` file act as a main controller of the SDK, which it receive the steps data from the healthkit access, handle calls from the developer, and do the converting and storing procedure. 
+
+The ```GameStep``` main class have variables like:
+- ```healthstore``` is used to retreive steps from healthkit.
+- ```currentStep```, is used to record the newest step retreived from the healthkit.
+- ```theCoin``` is used to record the newest coin converted.
+
 
 ## Installation and Usage
 1. Import the package.
@@ -41,15 +50,6 @@ In future versions, if applicable, we hope the SDK will explore more powerful fe
  * Can fetch GitHub Readme files
  * Gorgeous default theme (and it's responsive)
  * Just create an HTML file and deploy!
-
-### Converting steps to coins (100 steps = 1 coin).
-
-The ```GameStep``` file act as a main controller of the SDK, which it receive the steps data from the healthkit access, handle calls from the developer, and do the converting and storing procedure. 
-
-The ```GameStep``` main class have variables like:
-- ```healthstore``` is used to retreive steps from healthkit.
-- ```currentStep```, is used to record the newest step retreived from the healthkit.
-- ```theCoin``` is used to record the newest coin converted.
 
 
 ## Endpoints
