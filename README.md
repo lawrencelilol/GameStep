@@ -59,40 +59,33 @@ The ```GameStep``` main class have variables like:
 ``` swift
 var globalUser = GameStep()
 let totalCoins = SKLabelNode(text: "Total Coins Earned: \(globalUser.getCoins())")
-totalCoins.fontName = "AvenirNext-Bold"
-totalCoins.position = CGPoint(x: size.width/2, y: size.height/2 + 300)
 ```
 
-*Current version: [v0.9.0][dist]*
+### getSteps()
+```func getSteps() -> Int``` is a getter function of the steps that user has walked from 12am until now. It fetches from the ```UserDefault``` class.
 
-[![Build Status](https://travis-ci.org/rstacruz/flatdoc.svg?branch=gh-pages)](https://travis-ci.org/rstacruz/flatdoc)
+``` swift
+var globalUser = GameStep()
+let totalSteps = SKLabelNode(text: "You walked : \(globalUser.getSteps()) today")
+```
 
-Getting started
----------------
+### updateCoins()
+```func updateCoins()``` is a function that updates current steps and convert excessive steps into coins. It can be called every time a user logs in, or can be called periodically.
 
-Create a file based on the template, which has a bare DOM, link to the
-scripts, and a link to a theme. It will look something like this (not exact).
-For GitHub projects, simply place this file in your [GitHub pages] branch and
-you're all good to go.
+``` swift
+var globalUser = GameStep()
+let prevSteps = globalUser.defaults.integer(forKey: "steps")
+globalUser.updateCoins()
+var addedCoins = Int(Int(globalUser.currentStep) - prevSteps)/100
+let newCoins = SKLabelNode(text: "Congrats!! You Just earned: \(addedCoins) coins")
+```
 
-*In short: just download this file and upload it somewhere.*
+### consumeCoins()
+```func consumeCoin(coin: Int) -> Int``` is a function that consumes the coins earned so far. It will return the number of coins after the deduction.
 
-The main JS and CSS files are also available in [npm] and [bower].
-
-[Default theme template >][template]
-
-[Blank template >][blank]
-
-[bower]: http://bower.io/search/?q=flatdoc
-[npm]: https://www.npmjs.org/package/flatdoc
-
-### Via GitHub
-
-To fetch a Github Repository's readme file, use the `Flatdoc.github` fetcher.
-This will fetch the Readme file of the repository's default branch.
-
-``` javascript
-Flatdoc.run({
-  fetcher: Flatdoc.github('USER/REPO')
-});
+``` swift
+var globalUser = GameStep()
+let oldCoins = globalUser.getCoins()
+let newCoins = globalUser.consumeCoins(coin: costToRevive)
+let newCoinsLabel = SKLabelNode(text: "Now you have \(newCoins) coins")
 ```
